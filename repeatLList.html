@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>循环链表</title>
+    <style>
+
+    </style>
+    <script type="text/javascript">
+    // 单向链表查找、删除、插入
+        function Node(element){
+            this.element = element;
+            this.next = null;
+        }
+        function LList(){
+            this.head = new Node("1");
+            this.head.next = this.head;
+
+            this.find = find;
+            this.insert = insert;
+            this.display = display;
+            this.delete =del;
+            this.queryLastNode =queryLastNode;
+            this.queryfrontNode =queryfrontNode;
+        }
+
+        function find(item){
+            var currNode = this.head;
+            while(currNode.element !== item){
+                currNode = currNode.next;
+            }
+            return currNode;
+        }
+        function insert(newElement,item){
+            var newNode = new Node(newElement);
+            var currNode = this.find(item);
+            
+            newNode.next = currNode.next;
+            currNode.next = newNode;
+
+
+        }
+        function display(){
+            var currNode = this.head;
+            while(currNode.next != this.head){
+                console.log(currNode.element);
+                currNode = currNode.next;
+            }
+            console.log("最后一个元素为"+currNode.element);
+        }
+        function queryLastNode(){
+            var thisNode = this.head;
+            while( thisNode.next != this.head){
+                thisNode = thisNode.next;
+            }
+            return thisNode;
+        }
+        function queryfrontNode(item){
+            var currNode = this.find(item);
+            var thisNode = this.head;
+            while( thisNode.next != currNode){
+                thisNode = thisNode.next;
+            }
+            return thisNode;
+        }
+        function del(item){
+            var currNode = this.find(item);
+            if( currNode == this.head){
+                this.queryLastNode().next = this.head.next;
+                this.head = this.head.next;
+                currNode.next = null;
+                return;
+            }
+            var thisNode = this.head;
+            while(thisNode.next !== currNode){
+                thisNode = thisNode.next;
+            }
+            thisNode.next = currNode.next;
+            currNode.next = null;
+        }
+
+        // 本方案head为1，不是"head",链表的长度为len,n为从第几个数起，m为每隔几个删除。例如n为1，m为4 意思为 从第一个人开始数，报4的自杀，依此类推。
+        const len =100,m=3,n=1;
+        var cs = new LList();
+        var delNextNode;
+        var delNode
+        for(let i=1;i<len;i++){
+            cs.insert( (i+1).toString(),i.toString() )
+        }
+        cs.display();
+        console.log("============");
+        // var m=4;
+        // var n = 2;
+        delNode = cs.find(n.toString());
+        while( cs.head.next !==cs.head){           
+            for(let i=0;i<m;i++){
+                delNode = delNode.next;
+            }
+            delNextNode =cs.queryfrontNode(delNode.element);
+            cs.delete(delNextNode.element);
+            console.log("删除节点 元素"+delNextNode.element);
+        }
+        cs.display();
+        
+        
+
+
+
+
+
+//  var a_game = function(pNum){ 
+//     var players = []; 
+//     for(var i=1;i<=pNum;i++){ 
+//         players.push(i); 
+//     } 
+//     var flag=0; 
+//     while(players.length>1){ 
+//         var outPlayerNum = 0,len=players.length; 
+//         for(var i=0;i<len;i++){ 
+//             flag++; 
+//             if(flag==3){ 
+//                 flag=0; 
+//                 console.log("数组编号:"+ i +players[i-outPlayerNum]); 
+//                 players.splice(i-outPlayerNum,1); 
+//                 outPlayerNum++; 
+//             } 
+//         } 
+//     } 
+//     return players[0]; 
+// }; 
+// console.log("剩下:"+a_game(100));       
+    </script>
+</head>
+<body>
+    <div id="app">
+        <button >LList</button>
+    </div>
+
+</body>
+</html>
